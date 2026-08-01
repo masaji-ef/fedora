@@ -1,0 +1,85 @@
+// -*- mode: jsonc -*-
+{
+    "position": "bottom",
+    "height": 25,
+    "spacing": 4,
+
+    "modules-left": [
+    ],
+
+    "modules-center": [
+        "sway/workspaces",
+        "sway/mode",
+        "pulseaudio",
+        "network",
+        "battery",
+        "clock",
+        "tray"
+    ],
+
+    "modules-right": [
+    ],
+
+    "sway/workspaces": {
+        "disable-scroll": true,
+        "all-outputs": true,
+        "format": "{name}",
+        "format-icons": {
+            "1": "1",
+            "2": "2",
+            "3": "3",
+            "4": "4",
+            "5": "5",
+            "6": "6",
+            "7": "7",
+            "8": "8",
+            "9": "9",
+            "10": "0",
+            "urgent": "!",
+            "focused": "●",
+            "default": "○"
+        }
+    },
+
+    "sway/mode": {
+        "format": "[{}]"
+    },
+
+    "pulseaudio": {
+        "format": "vol {volume}%",
+        "format-muted": "muted",
+        "format-icons": {
+            "default": ["🔈", "🔉", "🔊"]
+        },
+        "on-click": "pavucontrol"
+    },
+
+    "network": {
+        "format-wifi": "net {essid} {signalStrength}%",
+        "format-ethernet": "net {ipaddr}",
+        "format-disconnected": "no net",
+        "tooltip": true,
+        "tooltip-format": "{ifname}: {ipaddr}"
+    },
+
+    "battery": {
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "bat {capacity}%",
+        "format-charging": "bat {capacity}% +",
+        "format-plugged": "bat {capacity}% =",
+        "format-icons": ["▁", "▂", "▃", "▄", "▅"]
+    },
+
+    "clock": {
+        "format": "{:%a %d %b %H:%M}",
+        "tooltip-format": "<big>{:%A, %d %B %Y}</big>\n<tt>{calendar}</tt>"
+    },
+
+    "tray": {
+        "spacing": 8,
+        "icon-size": 24
+    }
+}

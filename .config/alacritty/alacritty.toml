@@ -1,0 +1,88 @@
+# === Alacritty Configuration ===
+# Darkest Rose Pine (maximum contrast)
+
+[env]
+TERM = "xterm-256color"
+
+[window]
+opacity = 1.0
+padding = { x = 2, y = 2 }
+dynamic_padding = true
+decorations = "none"
+resize_increments = false
+
+[scrolling]
+history = 10000
+multiplier = 3
+
+[cursor]
+style = { shape = "Beam", blinking = "On" }
+vi_mode_style = { shape = "Block", blinking = "Off" }
+blink_interval = 750
+blink_timeout = 5
+
+[selection]
+save_to_clipboard = true
+
+[terminal]
+shell = { program = "/bin/bash", args = [] }
+
+[font]
+size = 16
+normal = { family = "JetBrainsMono Nerd Font", style = "Regular" }
+bold = { family = "JetBrainsMono Nerd Font", style = "Bold" }
+italic = { family = "JetBrainsMono Nerd Font", style = "Italic" }
+bold_italic = { family = "JetBrainsMono Nerd Font", style = "Bold Italic" }
+
+[font.glyph_offset]
+x = 0
+y = 0
+
+[colors]
+# Maximum contrast dark theme
+primary = { background = "#0a0a0f", foreground = "#f5f0e8" }
+cursor = { text = "#d4b8ff", cursor = "#ffffff" }
+
+[colors.normal]
+black = "#0a0a0f"
+red = "#ff6b6b"
+green = "#69db7c"
+yellow = "#ffd43b"
+blue = "#74c0fc"
+magenta = "#d4b8ff"
+cyan = "#74c0fc"
+white = "#f5f0e8"
+
+[colors.bright]
+black = "#3a3a5a"
+red = "#ff8787"
+green = "#8ce99a"
+yellow = "#ffd43b"
+blue = "#91d7ff"
+magenta = "#e5d4ff"
+cyan = "#91d7ff"
+white = "#ffffff"
+
+[[colors.indexed_colors]]
+index = 16
+color = "#ffd43b"
+
+[[colors.indexed_colors]]
+index = 17
+color = "#ff6b6b"
+
+[hints]
+enabled = [
+  { regex = "(ipfs:|ipns:|magnet:|mailto:|gemini:|gopher:|https:|http:|news:|file:|git:|ssh:|ftp:)[^\u0000-\u001F\u007F-\u009F<>\"\\s{-}\\^⟨⟩`]+",
+    command = "xdg-open",
+    post_processing = true,
+    mouse = { enabled = true },
+    binding = { key = "U", mods = "Control|Shift" }
+  }
+]
+
+[debug]
+render_timer = false
+persistent_logging = false
+log_level = "Warn"
+renderer = "glsl3"

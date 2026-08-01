@@ -1,0 +1,175 @@
+# ========== VARIABLES ==========
+set $mod Mod1
+set $term alacritty
+set $browser firefox
+set $wallpaper ~/_pics/bg1.png
+set $screenshot_dir ~/_pics/shots
+
+# ========== LAYOUT & BORDERS ==========
+default_border normal 3
+default_floating_border none
+gaps inner 4
+gaps outer 0
+title_align center
+floating_modifier $mod normal
+#hide_edge_borders smart
+#smart_gaps on
+
+# ========== CLIENT COLORS ==========
+client.focused          #000000 #000000 #ffffff #d4b8ff #ff6b6b
+client.focused_inactive #000000 #000000 #ffffff #8888aa #333355
+client.unfocused        #000000 #000000 #ffffff #8888aa #1a1a1a
+client.urgent           #000000 #000000 #ffffff #69db7c #000000
+client.placeholder      #000000 #000000 #ffffff #000000 #000000
+client.background       #111111
+
+# ========== INPUT ==========
+input type:keyboard {
+    xkb_layout "us,ru"
+    xkb_options "grp:caps_toggle"
+    repeat_rate 70
+    repeat_delay 180
+}
+input type:pointer {
+    accel_profile flat
+    pointer_accel 0.2
+}
+seat * {
+    xcursor_theme Adwaita 25
+}
+
+# ========== OUTPUTS ==========
+output * bg $wallpaper fill
+output DP-1 {
+    mode 2560x1440@144Hz
+    position 0 0
+    scale 1
+    render_bit_depth 8
+    transform normal
+    adaptive_sync disabled
+}
+output HDMI-A-1 {
+    mode 1920x1080@144Hz
+    position 2560 0
+    scale 1
+    render_bit_depth 8
+    transform 90
+    adaptive_sync disabled
+}
+
+# ========== WORKSPACE ASSIGNMENTS ==========
+workspace 1 output DP-1
+workspace 2 output DP-1
+workspace 3 output HDMI-A-1
+workspace 4 output HDMI-A-1
+
+# ========== KEYBINDINGS ==========
+# Window management
+bindsym $mod+q kill
+bindsym $mod+s fullscreen toggle
+bindsym $mod+r layout toggle split
+bindsym $mod+Tab focus mode_toggle
+bindsym $mod+Shift+grave floating toggle
+
+# Focus & move (with --to-code for multi-layout)
+bindsym --to-code {
+    $mod+h focus left
+    $mod+j focus down
+    $mod+k focus up
+    $mod+l focus right
+    $mod+Shift+h move left
+    $mod+Shift+j move down
+    $mod+Shift+k move up
+    $mod+Shift+l move right
+}
+
+# Workspaces
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+4 move container to workspace 4
+
+# Move workspace between outputs
+bindsym $mod+Ctrl+Left  move workspace to output left
+bindsym $mod+Ctrl+Right move workspace to output right
+bindsym $mod+Ctrl+Up    move workspace to output up
+bindsym $mod+Ctrl+Down  move workspace to output down
+
+# Resize mode
+mode "resize" {
+    bindsym h resize shrink width 10px
+    bindsym j resize grow height 10px
+    bindsym k resize shrink height 10px
+    bindsym l resize grow width 10px
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+Shift+r mode "resize"
+
+# Applications
+bindsym $mod+Return exec alacritty
+bindsym $mod+w exec firefox
+bindsym $mod+e exec rofi -show combi -combi-modes drun
+bindsym $mod+Shift+s exec rofi -show ssh
+
+# Audio
+bindsym XF86AudioRaiseVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
+bindsym XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+bindsym XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+
+# Screenshots
+bindsym $mod+equal exec mkdir -p $screenshot_dir && grim $screenshot_dir/$(date +'%Y-%m-%d-%H%M%S.png')
+bindsym $mod+minus exec mkdir -p $screenshot_dir && grim -g "$(slurp)" - | wl-copy
+
+# Lock
+bindsym $mod+Ctrl+Shift+l exec swaylock -f -i $wallpaper
+
+# Reload & exit
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+e exec swaymsg exit
+
+# Zenity example
+bindsym $mod+Shift+z exec zenity --info --text="Sway is running"
+
+# ========== WINDOW RULES ==========
+for_window [window_type="menu"] floating enable, border pixel 2, resize set 640 360
+for_window [window_type="utility"] floating enable, border pixel 2, resize set 640 360
+for_window [window_role="pop-up"] floating enable, border pixel 2, resize set 640 360
+for_window [window_type="dialog"] floating enable, border pixel 2, resize set 640 360
+
+for_window [title="Picture in picture"] floating enable, resize set 640 360, sticky enable, border pixel 2
+for_window [title="Picture-in-Picture"] floating enable, resize set 640 360, sticky enable, border pixel 2
+for_window [app_id="Picture-in-Picture"] floating enable, resize set 640 360, sticky enable, border pixel 2
+
+# Media viewer (AyuGram)
+for_window [app_id="com.ayugram.desktop" title="Media viewer"] floating enable, resize set 800 800, border pixel 2, fullscreen disable
+for_window [title="Media viewer"] floating enable, resize set 800 800, border pixel 2, fullscreen disable
+
+# ========== AUTOSTART ==========
+# Systemd/dbus environment
+exec systemctl --user import-environment WAYLAND_DISPLAY DISPLAY XDG_CURRENT_DESKTOP SWAYSOCK I3SOCK
+exec dbus-update-activation-environment WAYLAND_DISPLAY DISPLAY XDG_CURRENT_DESKTOP
+
+# PolicyKit agent (Xfce)
+exec /usr/libexec/xfce-polkit &
+
+# Idle management (lock after 10 min, no screen off)
+#exec swayidle -w timeout 600 'swaylock -f -i $wallpaper'
+
+# Background services
+exec waybar -c ~/.config/waybar/config.jsonc > /dev/null 2>&1 &
+exec /opt/TgWsProxy_linux_amd64 > /dev/null 2>&1 &
+exec AyuGram > /dev/null 2>&1 &
+exec nekobox > /dev/null 2>&1 &
+exec udiskie --tray &
+
+# Terminal at startup
+exec alacritty &
+
+# ========== APPLY RULES TO EXISTING WINDOWS ON RELOAD ==========
+# Apply window rules to all existing windows when config reloads
+#exec_always swaymsg -t get_tree | jq -r '.nodes[].nodes[] | select(.type=="con") | .id' | while read id; do swaymsg "[con_id=$id]" border normal 2; swaymsg "[con_id=$id]" floating disable; done
