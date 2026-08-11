@@ -35,38 +35,38 @@ bold_italic = { family = "JetBrainsMono Nerd Font", style = "Bold Italic" }
 x = 0
 y = 0
 
-# High contrast colors for deuteranopia
+# High contrast colors for deuteranopia (matching modular.nvim theme)
 [colors]
-primary = { background = "#0a0a0f", foreground = "#ffffff" }
-cursor = { text = "#000000", cursor = "#c4a7e7" }
+primary = { background = "#000000", foreground = "#ffffff" }
+cursor = { text = "#000000", cursor = "#bb88ff" }
 
 [colors.normal]
-black = "#0a0a0f"
-red = "#ff6b6b"
-green = "#69db7c"
-yellow = "#ffd43b"
-blue = "#74c0fc"
-magenta = "#d4b8ff"
-cyan = "#74c0fc"
+black = "#000000"
+red = "#ff5555"
+green = "#55ff55"
+yellow = "#ffdd44"
+blue = "#4488ff"
+magenta = "#bb88ff"
+cyan = "#44ddff"
 white = "#ffffff"
 
 [colors.bright]
-black = "#3a3a5a"
-red = "#ff8787"
-green = "#8ce99a"
-yellow = "#ffd43b"
-blue = "#91d7ff"
-magenta = "#e5d4ff"
-cyan = "#91d7ff"
+black = "#0a0a0f"
+red = "#ff5555"
+green = "#55ff55"
+yellow = "#ffdd44"
+blue = "#4488ff"
+magenta = "#bb88ff"
+cyan = "#44ddff"
 white = "#ffffff"
 
 [[colors.indexed_colors]]
 index = 16
-color = "#ffd43b"
+color = "#ffdd44"
 
 [[colors.indexed_colors]]
 index = 17
-color = "#ff6b6b"
+color = "#ff5555"
 
 [hints]
 enabled = [
