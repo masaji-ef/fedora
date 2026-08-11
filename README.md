@@ -1,8 +1,8 @@
-<div align="center">
+<p align="center">
+  <img src="pic.svg" alt="Fedora Dotfiles" width="900">
+</p>
 
-<img src="pic.svg" alt="Fedora Dotfiles" width="900">
-
-# 懲 Fedora Dotfiles
+# Fedora Dotfiles
 
 **Sway, Tmux, Waybar & Neovim configuration for daily development**
 
@@ -29,7 +29,6 @@ Everything is organized for easy customization and portability across Fedora sys
 - Sway 1.10+
 - Tmux 3.5+
 - Waybar 0.12+
-- Git 2.19+
 
 ### Dependencies
 
@@ -63,5 +62,3 @@ The installer will:
 1. Create a backup of existing configs in `~/dotfiles_backup_YYYYMMDD_HHMMSS`
 2. Create symlinks for all `.config` directories
 3. Show you what was installed
-
-</div>
