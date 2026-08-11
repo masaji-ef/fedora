@@ -6,25 +6,6 @@
 
 **Sway, Tmux, Waybar & Neovim configuration for daily development**
 
-[![Fedora](https://img.shields.io/badge/Fedora-41-51A8DD?style=for-the-badge&logo=fedora&logoColor=white)](https://fedoraproject.org/)
-[![Sway](https://img.shields.io/badge/Sway-1.10-2E8B57?style=for-the-badge&logo=sway&logoColor=white)](https://swaywm.org/)
-[![Tmux](https://img.shields.io/badge/Tmux-3.5-1BB91F?style=for-the-badge&logo=tmux&logoColor=white)](https://github.com/tmux/tmux)
-[![Waybar](https://img.shields.io/badge/Waybar-0.12-00B4D8?style=for-the-badge&logo=wayland&logoColor=white)](https://github.com/Alexays/Waybar)
-[![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-
-[![GitHub stars](https://img.shields.io/github/stars/masaji-ef/fedora-dotfiles?style=social)](https://github.com/masaji-ef/fedora-dotfiles/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/masaji-ef/fedora-dotfiles?style=social)](https://github.com/masaji-ef/fedora-dotfiles/network/members)
-[![GitHub last commit](https://img.shields.io/github/last-commit/masaji-ef/fedora-dotfiles)](https://github.com/masaji-ef/fedora-dotfiles/commits)
-
-[Features](#-features) •
-[Installation](#-installation) •
-[Structure](#-structure) •
-[Components](#-components) •
-[Keybindings](#-keybindings) •
-[License](#-license)
-
-</div>
-
 ---
 
 ## 📖 Description
@@ -83,13 +64,3 @@ The installer will:
 2. Create symlinks for all `.config` directories
 3. Show you what was installed
 
----
-
-<div align="center">
-
-### ⭐ Star this repo if you find it useful!
-
-[![GitHub stars](https://img.shields.io/github/stars/masaji-ef/fedora-dotfiles?style=for-the-badge&logo=github)](https://github.com/masaji-ef/fedora-dotfiles/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/masaji-ef/fedora-dotfiles?style=for-the-badge&logo=github)](https://github.com/masaji-ef/fedora-dotfiles/network/members)
-
-</div>
