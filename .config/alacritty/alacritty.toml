@@ -25,7 +25,7 @@ blink_timeout = 5
 save_to_clipboard = true
 
 [terminal]
-shell = { program = "/bin/bash", args = [] }
+shell = { program = "/bin/zsh", args = [] }
 
 [font]
 size = 16
@@ -39,7 +39,6 @@ x = 0
 y = 0
 
 [colors]
-# Maximum contrast dark theme
 primary = { background = "#0a0a0f", foreground = "#f5f0e8" }
 cursor = { text = "#d4b8ff", cursor = "#ffffff" }
 

@@ -1,40 +1,32 @@
-// -*- mode: jsonc -*-
 {
     "position": "bottom",
-    "height": 25,
-    "spacing": 4,
+    "height": 28,
+    "spacing": 6,
 
-    "modules-left": [
-    ],
+    "modules-left": [],
 
     "modules-center": [
-        "sway/workspaces",
         "sway/mode",
+        "sway/workspaces",
+        "custom/layout",
         "pulseaudio",
-        "network",
-        "battery",
         "clock",
+        "network",
+        "custom/bluetooth",
+        "battery",
+        "cpu",
+        "memory",
+        "custom/temp",
         "tray"
     ],
 
-    "modules-right": [
-    ],
+    "modules-right": [],
 
     "sway/workspaces": {
         "disable-scroll": true,
         "all-outputs": true,
         "format": "{name}",
         "format-icons": {
-            "1": "1",
-            "2": "2",
-            "3": "3",
-            "4": "4",
-            "5": "5",
-            "6": "6",
-            "7": "7",
-            "8": "8",
-            "9": "9",
-            "10": "0",
             "urgent": "!",
             "focused": "●",
             "default": "○"
@@ -42,24 +34,43 @@
     },
 
     "sway/mode": {
-        "format": "[{}]"
+        "format": "RESIZE MODE"
+    },
+
+    "clock": {
+        "format": " {:%a %d %b %H:%M}",
+        "tooltip-format": "<big>{:%A, %d %B %Y}</big>\n<tt>{calendar}</tt>"
     },
 
     "pulseaudio": {
-        "format": "vol {volume}%",
-        "format-muted": "muted",
+        "format": "  {volume}%",
+        "format-muted": " muted",
         "format-icons": {
-            "default": ["🔈", "🔉", "🔊"]
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", "", ""]
         },
         "on-click": "pavucontrol"
     },
 
     "network": {
-        "format-wifi": "net {essid} {signalStrength}%",
-        "format-ethernet": "net {ipaddr}",
-        "format-disconnected": "no net",
+        "format-wifi": " {essid}",
+        "format-ethernet": " {ipaddr}",
+        "format-disconnected": " no net",
         "tooltip": true,
-        "tooltip-format": "{ifname}: {ipaddr}"
+        "interval": 1
+    },
+
+    "custom/bluetooth": {
+        "format": "{}",
+        "exec": "if bluetoothctl show | grep -q 'Powered: yes'; then echo ' on'; else echo ' off'; fi",
+        "interval": 1,
+        "on-click": "bluetoothctl power toggle",
+        "tooltip": "Click to toggle Bluetooth"
     },
 
     "battery": {
@@ -67,19 +78,39 @@
             "warning": 30,
             "critical": 15
         },
-        "format": "bat {capacity}%",
-        "format-charging": "bat {capacity}% +",
-        "format-plugged": "bat {capacity}% =",
-        "format-icons": ["▁", "▂", "▃", "▄", "▅"]
+        "format": " {capacity}%",
+        "format-charging": " {capacity}%",
+        "format-plugged": " {capacity}%",
+        "format-alt": " {time}",
+        "format-icons": ["", "", "", "", ""]
     },
 
-    "clock": {
-        "format": "{:%a %d %b %H:%M}",
-        "tooltip-format": "<big>{:%A, %d %B %Y}</big>\n<tt>{calendar}</tt>"
+    "cpu": {
+        "format": " {usage}%",
+        "interval": 1
+    },
+
+    "memory": {
+        "format": " {percentage}%",
+        "interval": 1
+    },
+
+    "custom/temp": {
+        "format": " {}°C",
+        "exec": "sensors | grep 'Tctl' | awk '{print $2}' | cut -d'+' -f2 | cut -d'.' -f1 || echo 'N/A'",
+        "interval": 1
+    },
+
+    "custom/layout": {
+        "format": "{}",
+        "exec": "swaymsg -t get_inputs | jq -r '.[] | select(.type == \"keyboard\") | .xkb_active_layout_name' | head -1 | sed 's/English (US)/🇺🇸/; s/Russian/🇷🇺/'",
+        "interval": 1,
+        "on-click": "swaymsg input type:keyboard xkb_switch_layout next",
+        "tooltip": "Click to switch layout"
     },
 
     "tray": {
         "spacing": 8,
-        "icon-size": 24
+        "icon-size": 22
     }
 }

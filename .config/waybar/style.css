@@ -1,4 +1,4 @@
-/* 
+/*
  * Waybar - Pure black minimalist
  * Font: JetBrainsMono Nerd Font
  */
@@ -32,15 +32,15 @@ button:hover {
 #workspaces button {
     padding: 0 6px;
     background-color: transparent;
-    color: #666666;
+    color: #444444;
+    font-size: 14px;
 }
 
 #workspaces button:hover {
     background: #1a1a1a;
 }
 
-#workspaces button.focused,
-#workspaces button.active {
+#workspaces button.focused {
     color: #ffffff;
 }
 
@@ -50,8 +50,9 @@ button:hover {
 
 /* Sway mode */
 #mode {
-    color: #ffffff;
     padding: 0 8px;
+    color: #000000;
+    background-color: #DC143C;
 }
 
 /* Common module settings */
@@ -59,23 +60,20 @@ button:hover {
 #battery,
 #network,
 #pulseaudio,
+#cpu,
+#memory,
+#custom-temp,
+#custom-layout,
+#custom-bluetooth,
 #tray,
-#mode,
 #workspaces {
-    padding: 0 10px;
+    padding: 0 8px;
     color: #ffffff;
     background-color: transparent;
 }
 
 #workspaces {
     margin: 0 4px;
-}
-
-.modules-left > widget:first-child > #workspaces {
-    margin-left: 0;
-}
-.modules-right > widget:last-child > #workspaces {
-    margin-right: 0;
 }
 
 /* Clock */
@@ -130,6 +128,67 @@ button:hover {
 }
 
 #pulseaudio.muted {
+    color: #666666;
+}
+
+/* CPU */
+#cpu {
+    color: #ffffff;
+}
+
+#cpu.warning {
+    color: #ffaa00;
+}
+
+#cpu.critical {
+    color: #ff4444;
+}
+
+/* Memory */
+#memory {
+    color: #ffffff;
+}
+
+#memory.warning {
+    color: #ffaa00;
+}
+
+#memory.critical {
+    color: #ff4444;
+}
+
+/* Temperature */
+#custom-temp {
+    color: #ffffff;
+}
+
+#custom-temp.warning {
+    color: #ffaa00;
+}
+
+#custom-temp.critical {
+    color: #ff4444;
+}
+
+/* Layout indicator */
+#custom-layout {
+    font-size: 16px;
+    color: #ffffff;
+    padding: 0 4px;
+}
+
+/* Bluetooth */
+#custom-bluetooth {
+    font-size: 14px;
+    color: #666666;
+    padding: 0 4px;
+}
+
+#custom-bluetooth.on {
+    color: #66ccff;
+}
+
+#custom-bluetooth.off {
     color: #666666;
 }
 
