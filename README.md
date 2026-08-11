@@ -64,3 +64,4 @@ The installer will:
 2. Create symlinks for all `.config` directories
 3. Show you what was installed
 
+</div>
