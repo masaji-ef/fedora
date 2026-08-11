@@ -14,13 +14,11 @@
 
   <rect width="800" height="200" fill="url(#bg)" rx="12"/>
 
-  <text x="400" y="75" text-anchor="middle" dominant-baseline="central" font-family="'JetBrainsMono Nerd Font','Roboto Mono',monospace" font-size="56" font-weight="bold" fill="url(#accent)" letter-spacing="3">懲 fedora dotfiles</text>
+  <text x="400" y="75" text-anchor="middle" dominant-baseline="central" font-family="'JetBrainsMono Nerd Font','Roboto Mono',monospace" font-size="56" font-weight="bold" fill="url(#accent)" letter-spacing="3">fedora .dotfiles</text>
 
   <text x="400" y="115" text-anchor="middle" dominant-baseline="central" font-family="'JetBrainsMono Nerd Font','Roboto Mono',monospace" font-size="16" fill="#a8b2d1" letter-spacing="4">SWAY · TMUX · WAYBAR · NVIM</text>
 
   <rect x="200" y="135" width="400" height="1.5" fill="url(#accent)" opacity="0.3"/>
 
   <text x="400" y="157" text-anchor="middle" dominant-baseline="central" font-family="'JetBrainsMono Nerd Font','Roboto Mono',monospace" font-size="12" fill="#5a6a8a" letter-spacing="2">Fedora 41 · Wayland · Rosé Pine</text>
-
-  <text x="400" y="182" text-anchor="middle" dominant-baseline="central" font-family="'JetBrainsMono Nerd Font','Roboto Mono',monospace" font-size="10" fill="#3a4a6a" letter-spacing="1">MIT License</text>
 </svg>
