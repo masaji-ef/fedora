@@ -1,0 +1,77 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+usage() {
+    cat <<EOF
+Usage: view [OPTIONS] <extensions...>
+
+View contents of all text files with given extensions (recursively).
+
+Options:
+  -d <dir>   Search in specified directory instead of current
+  -h, --help Show this help
+
+Extensions: can be with or without leading dot, e.g., .sh, py, txt
+
+Examples:
+  view .sh .py          # show all .sh and .py files in current dir
+  view -d ~/projects .md # show all .md files in ~/projects
+EOF
+    exit 0
+}
+
+search_dir="."
+extensions=()
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -d)
+            if [[ -z "$2" ]]; then
+                echo "Error: -d requires a directory" >&2
+                exit 1
+            fi
+            search_dir="$2"
+            shift 2
+            ;;
+        -h|--help)
+            usage
+            ;;
+        -*)
+            echo "Unknown option: $1" >&2
+            exit 1
+            ;;
+        *)
+            if [[ "$1" =~ ^\. ]]; then
+                extensions+=("$1")
+            else
+                extensions+=(".$1")
+            fi
+            shift
+            ;;
+    esac
+done
+
+if [[ ${#extensions[@]} -eq 0 ]]; then
+    echo "Error: no extensions provided" >&2
+    usage
+fi
+
+if [[ ! -d "$search_dir" ]]; then
+    echo "Error: directory '$search_dir' does not exist" >&2
+    exit 1
+fi
+
+find_args=()
+for ext in "${extensions[@]}"; do
+    find_args+=(-name "*$ext" -o)
+done
+unset 'find_args[-1]'
+
+find "$search_dir" -type f \( "${find_args[@]}" \) -print0 | while IFS= read -r -d '' file; do
+    if file -b --mime-type "$file" | grep -q '^text/'; then
+        abs_path="$(realpath "$file" 2>/dev/null || readlink -f "$file" 2>/dev/null || echo "$file")"
+        echo "--- File: $abs_path ---"
+        cat "$file"
+        echo ""
+    fi
+done
