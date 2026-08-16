@@ -173,6 +173,7 @@ bindsym $mod+Shift+r mode "resize"
 bindsym $mod+Return exec alacritty
 bindsym $mod+w exec firefox
 bindsym $mod+e exec rofi -show combi -combi-modes drun
+bindsym $mod+z exec ~/.local/bin/woomer --monitor DP-1 --output DP-1
 
 # ============================================================================#
 #  MEDIA & SCREENSHOTS                                                        #
@@ -183,11 +184,11 @@ bindsym XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
 bindsym XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
 
 # Brightness
-bindsym XF86MonBrightnessUp exec brightnessctl set +5%
-bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
+#bindsym XF86MonBrightnessUp exec brightnessctl set +5%
+#bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
 
-# Screenshots
-bindsym $mod+equal exec mkdir -p $screenshot_dir && grim $screenshot_dir/$(date +'%Y-%m-%d-%H%M%S.png')
+# Screenshots (grim + wl-copy)
+bindsym $mod+equal exec mkdir -p $screenshot_dir && grim -o DP-1 $screenshot_dir/$(date +'%Y-%m-%d-%H%M%S.png') && wl-copy < $screenshot_dir/$(date +'%Y-%m-%d-%H%M%S.png')
 bindsym $mod+minus exec mkdir -p $screenshot_dir && grim -g "$(slurp)" - | wl-copy
 
 # ============================================================================#
@@ -208,11 +209,12 @@ exec dbus-update-activation-environment WAYLAND_DISPLAY DISPLAY XDG_CURRENT_DESK
 exec /usr/libexec/xfce-polkit &
 exec udiskie --notify --tray &
 exec waybar -c ~/.config/waybar/config.jsonc > /dev/null 2>&1 &
+exec /usr/libexec/xdg-desktop-portal &
+exec /usr/libexec/xdg-desktop-portal-wlr &
 
 # Apps & UI
 exec /opt/TgWsProxy_linux_amd64 > /dev/null 2>&1 &
-
-exec workspace 1; exec $browser > /dev/null 2>&1 &
-exec workspace 2; exec alacritty > /dev/null 2>&1 &
-exec workspace 3; exec AyuGram > /dev/null 2>&1 &
-exec workspace 4; exec nekobox > /dev/null 2>&1 &
+exec alacritty > /dev/null 2>&1 &
+#exec $browser > /dev/null 2>&1 &
+#exec AyuGram > /dev/null 2>&1 &
+#exec nekobox > /dev/null 2>&1 &
