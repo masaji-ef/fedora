@@ -5,7 +5,6 @@ set $mod Mod1
 set $term alacritty
 set $browser firefox
 set $wallpaper ~/_pics/bg1.png
-set $screenshot_dir ~/_pics/shots
 
 # ============================================================================#
 #  APPEARANCE (borders, gaps, colors)                                         #
@@ -94,17 +93,38 @@ bindsym $mod+Shift+0 move container to workspace 10
 #assign [title="Media viewer"] workspace 1
 #assign [window_type="dialog"] workspace 1
 
-
 # Floating window rules
-for_window [window_type="menu"] floating enable, border pixel 3, resize set 640 360, sticky enable
-for_window [window_type="utility"] floating enable, border pixel 3, resize set 640 360, sticky enable
-for_window [window_role="pop-up"] floating enable, border pixel 3, resize set 640 360, sticky enable
-for_window [window_type="dialog"] floating enable, border pixel 3, resize set 640 360, sticky enable
-for_window [title="Picture in picture"] floating enable, resize set 640 360, sticky enable, border pixel 3
-for_window [title="Picture-in-Picture"] floating enable, resize set 640 360, sticky enable, border pixel 3
-for_window [app_id="Picture-in-Picture"] floating enable, resize set 640 360, sticky enable, border pixel 3
-for_window [app_id="com.ayugram.desktop" title="Media viewer"] floating enable, resize set 800 800, border pixel 3, fullscreen disable
-for_window [title="Media viewer"] floating enable, resize set 800 800, border pixel 3, fullscreen disable
+for_window [app_id="pavucontrol"] floating enable, move position center, border pixel 3, resize set 640 360, sticky enable
+for_window [app_id="pavucontrol-qt"] floating enable, move position center, border pixel 3, resize set 640 360, sticky enable
+
+for_window [window_type="menu"] floating enable, border pixel 3, resize set 640 360, sticky enable, move position center
+for_window [window_type="utility"] floating enable, border pixel 3, resize set 640 360, sticky enable, move position center
+for_window [window_role="pop-up"] floating enable, border pixel 3, resize set 640 360, sticky enable, move position center
+for_window [window_type="dialog"] floating enable, border pixel 3, resize set 640 360, sticky enable, move position center
+for_window [app_id="virt-manager"] floating enable, move position center, border pixel 3, resize set 800 600, sticky enable
+for_window [title="Authentication Required"] floating enable, move position center, border pixel 3, resize set 500 200, sticky enable
+for_window [app_id="lxqt-policykit-agent"] floating enable, move position center, border pixel 3, resize set 500 200, sticky enable
+for_window [window_type="splash"] floating enable
+
+for_window [class="firefox"] mark Browser
+for_window [app_id="firefox"] mark Browser
+for_window [app_id="firefox" title="Firefox — Sharing Indicator"] floating enable, border pixel 3, resize set 400 200, move position center, mark Browser
+#for_window [app_id="firefox" title="Picture-in-Picture"] floating enable, resize set 640 360, sticky enable, border pixel 3, move position center
+#for_window [class="firefox" title="Picture-in-Picture"] floating enable, resize set 640 360, sticky enable, border pixel 3, move position center
+
+for_window [con_mark="Browser"] {
+    inhibit_idle fullscreen
+}
+
+for_window [title="Picture in picture"] floating enable, resize set 640 360, sticky enable, border pixel 3, move position center
+for_window [title="Picture-in-Picture"] floating enable, resize set 640 360, sticky enable, border pixel 3, move position center
+for_window [app_id="Picture-in-Picture"] floating enable, resize set 640 360, sticky enable, border pixel 3, move position center
+
+for_window [app_id="com.ayugram.desktop" title="Media viewer"] floating enable, resize set 800 800, border pixel 3, fullscreen disable, move position center
+for_window [title="Media viewer"] floating enable, resize set 800 800, border pixel 3, fullscreen disable, move position center
+
+for_window [app_id="blueman-manager"] floating enable, move position center, border pixel 3, resize set 640 480, sticky enable
+for_window [app_id="nm-connection-editor"] floating enable, move position center, border pixel 3, resize set 640 480, sticky enable
 
 # ============================================================================#
 #  INPUT (keyboard, mouse, cursor)                                            #
@@ -122,7 +142,7 @@ input type:pointer {
 }
 
 seat * {
-    xcursor_theme Adwaita 25
+    xcursor_theme Adwaita 32
 }
 
 # ============================================================================#
@@ -187,9 +207,14 @@ bindsym XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
 #bindsym XF86MonBrightnessUp exec brightnessctl set +5%
 #bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
 
-# Screenshots (grim + wl-copy)
-bindsym $mod+equal exec mkdir -p $screenshot_dir && grim -o DP-1 $screenshot_dir/$(date +'%Y-%m-%d-%H%M%S.png') && wl-copy < $screenshot_dir/$(date +'%Y-%m-%d-%H%M%S.png')
-bindsym $mod+minus exec mkdir -p $screenshot_dir && grim -g "$(slurp)" - | wl-copy
+# Screenshots (grimshot)
+bindsym $mod+minus exec grimshot savecopy area "$HOME/_pics/shots/$(date +'%Y-%m-%d-%H%M%S.png')"
+bindsym $mod+equal exec grimshot savecopy output "$HOME/_pics/shots/$(date +'%Y-%m-%d-%H%M%S.png')"
+
+# Media keys
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
 
 # ============================================================================#
 #  SYSTEM COMMANDS (lock, reload, exit)                                      #
@@ -202,17 +227,17 @@ bindsym $mod+Shift+e exec swaymsg exit
 #  AUTOSTART                                                                  #
 # ============================================================================#
 # Environment
-exec systemctl --user import-environment WAYLAND_DISPLAY DISPLAY XDG_CURRENT_DESKTOP SWAYSOCK I3SOCK
-exec dbus-update-activation-environment WAYLAND_DISPLAY DISPLAY XDG_CURRENT_DESKTOP
+exec ~/.config/sway/env.sh
 
 # System services
-exec /usr/libexec/xfce-polkit &
-exec udiskie --notify --tray &
-exec waybar -c ~/.config/waybar/config.jsonc > /dev/null 2>&1 &
+exec /usr/libexec/lxqt-policykit-agent &
 exec /usr/libexec/xdg-desktop-portal &
 exec /usr/libexec/xdg-desktop-portal-wlr &
+exec nm-applet --indicator &
 
 # Apps & UI
+exec udiskie --notify --tray &
+exec waybar -c ~/.config/waybar/config.jsonc > /dev/null 2>&1 &
 exec /opt/TgWsProxy_linux_amd64 > /dev/null 2>&1 &
 exec alacritty > /dev/null 2>&1 &
 #exec $browser > /dev/null 2>&1 &
