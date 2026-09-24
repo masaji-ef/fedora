@@ -1,0 +1,8 @@
+[keymap]
+[[manager.prepend_keymap]]
+on = "Enter"
+run = [
+    "shell 'echo \"$(basename \"%s\")\"'",
+    "shell 'alacritty --working-directory \"$(dirname \"%s\")\"'",
+    "quit",
+]
